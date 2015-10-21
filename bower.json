@@ -1,0 +1,12 @@
+{
+  "name": "competUI frontend dependencies",
+  "version": "0.0.1",
+  "homepage": "",
+  "description": "",
+  "dependencies": {
+    "jquery": "1.9.1",
+    "responsejs": "~0.9.1",
+    "validator-js": "~3.30.0"
+  },
+  "private": true
+}
