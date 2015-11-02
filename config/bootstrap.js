@@ -11,7 +11,13 @@
 
 module.exports.bootstrap = function(cb) {
 
-  // It's very important to trigger this callback method when you are finished
-  // with the bootstrap!  (otherwise your server will never lift, since it's waiting on the bootstrap)
-  cb();
+    /**
+     * Load the promise library, so that its availbale everywhere.
+     */
+    global.Q = require('q');
+    global.Q.longStackSupport = true;
+
+    // It's very important to trigger this callback method when you are finished
+    // with the bootstrap!  (otherwise your server will never lift, since it's waiting on the bootstrap)
+    cb();
 };

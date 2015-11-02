@@ -34,6 +34,9 @@ module.exports.routes = {
 
   '/': {
     view: 'homepage'
+  },
+  '/filters': {
+    target:'FilterController.index'
   }
 
   /***************************************************************************
