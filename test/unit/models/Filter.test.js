@@ -1,7 +1,12 @@
 var nock = require('nock');
 var should = require('should');
+var chai = require('chai');
+var chaiAsPromised = require('chai-as-promised');
+chai.use(chaiAsPromised);
+var expect = require('chai').expect;
 
 var baseURL, venture, entityName;
+
 describe('FilterModel', function() {
 
     before(function() {
@@ -12,7 +17,8 @@ describe('FilterModel', function() {
     });
 
     describe('#getFilterList()', function() {
-        it('Should get list of filters', function(done) {
+
+        beforeEach(function() {
 
             nock(baseURL)
                 .get('/' + venture + '/' + entityName)
@@ -27,20 +33,18 @@ describe('FilterModel', function() {
                         ]
                     }
                 });
-
-            Filter.getFilterList('venture').then(function(data) {
-                var testarr = [
-                    "categories",
-                    "bricks",
-                    "brands",
-                    "competitors"
-                ];
-
-                (data).should.be.instanceOf(Array).and.have.lengthOf(4);
-                data.should.eql(testarr);
-                done();
-            }).done();
         });
+
+        it('Should be an Array of length 4.', function(done) {
+            expect(Filter.getFilterList('venture')).to.eventually.have.length(4).notify(done);
+        });
+        it('Array contains valid keys.', function(done) {
+            expect(Filter.getFilterList('venture'))
+                .to.eventually.include
+                .members(['categories','bricks','brands','competitors'])
+                .notify(done);
+        });
+        
     });
 
     describe('#prepareFilterData()', function() {
