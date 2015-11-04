@@ -22,7 +22,7 @@ Filter.getFilterList = function(venture) {
             return data.filters;
         }
     ).catch(function(){
-        throw new Error('Filter -> getFilterList Error obtaining filter list');
+        throw new Error('Filter#getFilterList() Error obtaining filter list');
     });
 };
 
@@ -37,7 +37,7 @@ Filter.getFilterData = function(venture, type) {
     var url = this.baseurl + venture + '/' + this.entityName + '?type='+type;
     var Request = HttpService.newGetRequest(url);
     return HttpService.fire(Request).catch(function(){
-        throw new Error('Filter -> getFilterData[' + type + '] Error obtaining filter data');
+        throw new Error('Filter#getFilterData(' + type + ') Error obtaining filter data');
     });
 };
 
@@ -52,6 +52,8 @@ Filter.prepareFilterData = function(venture) {
     var self = this;
     return filterList.then(function(data) {
         var filterArr = [];
+        //check if sort_by is present, else insert it.
+        data = _.union(data,['sort_by']);
         _.forEach(data, function(val) {
             filterArr.push(self.getFilterData(venture, val));
         });
